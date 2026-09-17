@@ -16,10 +16,10 @@ button{padding:10px 15px; border:none; background:#4facfe; color:white; border-r
 <body>
 <div class="card">
 <h2>Weather App</h2>
-<input type="text" id="city" placeholder="City likho - Lucknow">
+<input type="text" id="city" placeholder=" Enter City">
 <button onclick="getWeather()">Search</button>
 <div id="result">
-<p>City search karo...</p>
+<p>search city.</p>
 </div>
 </div>
 
@@ -46,7 +46,7 @@ resultDiv.innerHTML = `
 <p>Wind: ${wind} km/h</p>
 `;
 }catch(e){
-resultDiv.innerHTML = "City nahi mila! Dobara likho.";
+resultDiv.innerHTML = "City is not found";
 }
 }
 // Load Lucknow by default
