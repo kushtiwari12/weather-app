@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather App</title>
+<style>
+body{font-family:Arial; background:linear-gradient(to right,#4facfe,#00f2fe); display:flex; justify-content:center; align-items:center; height:100vh; margin:0;}
+.card{background:white; padding:30px; border-radius:20px; box-shadow:0 10px 20px rgba(0,0,0,0.2); text-align:center; width:320px;}
+input{padding:10px; width:70%; border-radius:10px; border:1px solid #ccc;}
+button{padding:10px 15px; border:none; background:#4facfe; color:white; border-radius:10px; cursor:pointer; margin-left:5px;}
+#result{margin-top:20px;}
+.temp{font-size:40px; font-weight:bold;}
+</style>
 </head>
 <body>
-    This is use weather app
+<div class="card">
+<h2>Weather App</h2>
+<input type="text" id="city" placeholder="City likho - Lucknow">
+<button onclick="getWeather()">Search</button>
+<div id="result">
+<p>City search karo...</p>
+</div>
+</div>
+
+<script>
+async function getWeather(){
+let city = document.getElementById('city').value;
+if(!city) city="Lucknow";
+let resultDiv = document.getElementById('result');
+resultDiv.innerHTML = "Loading...";
+
+try{
+let res = await fetch(`https://wttr.in/${city}?format=j1`);
+let data = await res.json();
+let temp = data.current_condition[0].temp_C;
+let desc = data.current_condition[0].weatherDesc[0].value;
+let humidity = data.current_condition[0].humidity;
+let wind = data.current_condition[0].windspeedKmph;
+
+resultDiv.innerHTML = `
+<h3>${city.toUpperCase()}</h3>
+<div class="temp">${temp}°C</div>
+<p>${desc}</p>
+<p>Humidity: ${humidity}%</p>
+<p>Wind: ${wind} km/h</p>
+`;
+}catch(e){
+resultDiv.innerHTML = "City nahi mila! Dobara likho.";
+}
+}
+// Load Lucknow by default
+getWeather();
+</script>
 </body>
 </html>
